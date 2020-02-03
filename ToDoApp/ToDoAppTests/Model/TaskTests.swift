@@ -11,18 +11,21 @@ import XCTest
 
 class TaskTests: XCTestCase {
 
+    // проверка что title не nil
     func testInitTaskWithTitle() {
         let task = Task(title: "Foo")
         
         XCTAssertNotNil(task) // проверка что объект существует
     }
     
+     // проверка что description не nil
     func testInitTaskWithTitleAndDescription() {
         let task = Task(title: "Foo", description: "Bar")
         
         XCTAssertNotNil(task) // проверка что объект существует
     }
     
+     // проверка что title равен заданному
     func testWhenGivenTitleSetsTitle() {
         let task = Task(title: "Foo")
         
@@ -30,6 +33,7 @@ class TaskTests: XCTestCase {
         XCTAssertEqual(task.title, "Foo")
     }
     
+     // проверка что description равег заданному
     func testWhenGivenDescriptionSetsDescription() {
         let task = Task(title: "Foo", description: "Bar")
         
@@ -37,10 +41,22 @@ class TaskTests: XCTestCase {
         XCTAssertTrue(task.description == "Bar")
     }
     
+    // проверка что установлена date
     func testTaskInitsWithDate() {
         let task = Task(title: "Foo")
         
         XCTAssertNotNil(task.date)
+    }
+    
+    // проверка что установлена location
+    func testWhenGivenLocationSetsLocation() {
+        let location = Location(name: "Foo")
+        
+        let task = Task(title: "Foo",
+                        description: "Bar",
+                        location: location)
+        
+        XCTAssertEqual(location, task.location)
     }
 
 }
