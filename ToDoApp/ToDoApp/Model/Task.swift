@@ -23,3 +23,14 @@ struct Task {
     }
     
 }
+
+// переопределяем сравнение (исключаем date) потому что при создании даты фиксируются наносекунды и объекты сравниваются неправильно
+extension Task: Equatable {
+    static func == (lhs: Task, rhs: Task) ->  Bool {
+        if  lhs.title == rhs.title,
+            lhs.description == rhs.description,
+            lhs.location  == rhs.location { return true }
+        
+        return false
+    }
+}

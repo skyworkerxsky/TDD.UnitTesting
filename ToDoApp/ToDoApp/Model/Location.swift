@@ -19,13 +19,13 @@ struct Location {
     }
 }
 
+// переопределяем равенство двух location
 extension Location: Equatable {
-    // переопределяем равенство двух location
     static func == (lhs: Location, rhs: Location) -> Bool {
-        guard lhs.coordinate?.latitude == rhs.coordinate?.latitude &&
-            lhs.coordinate?.longitude == rhs.coordinate?.longitude &&
-            lhs.name == rhs.name else { return false }
+        if  lhs.coordinate?.latitude == rhs.coordinate?.latitude,
+            lhs.coordinate?.longitude == rhs.coordinate?.longitude,
+            lhs.name == rhs.name { return true }
         
-        return true
+        return false
     }
 }
