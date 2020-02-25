@@ -22,6 +22,7 @@
 		7C81B49623E85A84002950B5 /* ToDoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C81B49523E85A84002950B5 /* ToDoAppUITests.swift */; };
 		7C9CE1FD23F333B600F5589C /* TaskListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9CE1FC23F333B600F5589C /* TaskListViewControllerTests.swift */; };
 		7C9FEE4D2405826400A44858 /* DataProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FEE4C2405826400A44858 /* DataProviderTests.swift */; };
+		7C9FEE4F24058B1A00A44858 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FEE4E24058B1A00A44858 /* TaskCell.swift */; };
 		7CE91F1223F342E500E22B44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CE91F1123F342E500E22B44 /* Main.storyboard */; };
 		7CE91F1423F34ACE00E22B44 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE91F1323F34ACE00E22B44 /* DataProvider.swift */; };
 /* End PBXBuildFile section */
@@ -65,6 +66,7 @@
 		7C81B49723E85A84002950B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C9CE1FC23F333B600F5589C /* TaskListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewControllerTests.swift; sourceTree = "<group>"; };
 		7C9FEE4C2405826400A44858 /* DataProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderTests.swift; sourceTree = "<group>"; };
+		7C9FEE4E24058B1A00A44858 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		7CE91F1123F342E500E22B44 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		7CE91F1323F34ACE00E22B44 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				7CE91F1123F342E500E22B44 /* Main.storyboard */,
+				7C9FEE4E24058B1A00A44858 /* TaskCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				7C45A72F23E8C64200CCDBF7 /* Task.swift in Sources */,
 				7C81B47823E85A81002950B5 /* TaskListViewController.swift in Sources */,
 				7CE91F1423F34ACE00E22B44 /* DataProvider.swift in Sources */,
+				7C9FEE4F24058B1A00A44858 /* TaskCell.swift in Sources */,
 				7C45A73123E8CB7900CCDBF7 /* Location.swift in Sources */,
 				7C81B47423E85A81002950B5 /* AppDelegate.swift in Sources */,
 				7C81B47623E85A81002950B5 /* SceneDelegate.swift in Sources */,
