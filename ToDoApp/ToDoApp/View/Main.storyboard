@@ -18,6 +18,10 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="90c-ih-Yga">
                                 <rect key="frame" x="16" y="20" width="343" height="627"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="g7n-aT-MSk" id="O0i-RT-4vD"/>
+                                    <outlet property="delegate" destination="g7n-aT-MSk" id="oLH-Eh-Nss"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -30,10 +34,12 @@
                         <viewLayoutGuide key="safeArea" id="Jy9-HV-1t4"/>
                     </view>
                     <connections>
+                        <outlet property="dataProvider" destination="g7n-aT-MSk" id="fwl-HY-oUQ"/>
                         <outlet property="tableView" destination="90c-ih-Yga" id="nto-z0-S6F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MkT-Ku-icv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <customObject id="g7n-aT-MSk" customClass="DataProvider" customModule="ToDoApp" customModuleProvider="target"/>
             </objects>
             <point key="canvasLocation" x="-170.40000000000001" y="136.28185907046478"/>
         </scene>

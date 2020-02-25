@@ -13,6 +13,7 @@ class TaskListViewController: UIViewController {
     // MARK: - Outlets
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var dataProvider: DataProvider!
     
     // MARK: - Life
     
