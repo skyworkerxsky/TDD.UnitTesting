@@ -136,6 +136,36 @@ class DataProviderTests: XCTestCase {
         XCTAssertEqual(buttonTitle, "Undone")
     }
     
+    // проверяем что при нажатии на кнопку у нас из одной секции задача переходит в выполненные
+    func testCheckingTaskChecksIntTaskManager() {
+        let task = Task(title: "Foo")
+        sut.taskManager?.add(task: task)
+        
+        // имитируем нажатие на кнопку при свайпе
+        tableView.dataSource?.tableView?(tableView,
+                                         commit: .delete,
+                                         forRowAt: IndexPath(row: 0, section: 0))
+        
+        XCTAssertEqual(sut.taskManager?.tasksCount, 0)
+        XCTAssertEqual(sut.taskManager?.doneTasksCount, 1)
+    }
+    
+    // переводим задачу снова в невыполненные
+    func testUncheckingTaskUnchecksTaskManager() {
+        let task = Task(title: "Foo")
+        sut.taskManager?.add(task: task)
+        sut.taskManager?.checkTask(at: 0)
+        tableView.reloadData()
+        
+        // имитируем нажатие на кнопку при свайпе
+        tableView.dataSource?.tableView?(tableView,
+                                         commit: .delete,
+                                         forRowAt: IndexPath(row: 0, section: 1))
+        
+        XCTAssertEqual(sut.taskManager?.tasksCount, 1)
+        XCTAssertEqual(sut.taskManager?.doneTasksCount, 0)
+    }
+    
 }
 
 // подменяем tableView на MockTableView
