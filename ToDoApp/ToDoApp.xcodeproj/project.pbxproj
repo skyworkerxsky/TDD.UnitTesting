@@ -24,6 +24,8 @@
 		7C9FEE4D2405826400A44858 /* DataProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FEE4C2405826400A44858 /* DataProviderTests.swift */; };
 		7C9FEE4F24058B1A00A44858 /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9FEE4E24058B1A00A44858 /* TaskCell.swift */; };
 		7CB7DE962416926500A26678 /* TaskCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7DE952416926500A26678 /* TaskCellTests.swift */; };
+		7CB7DE982416AB5000A26678 /* DetailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7DE972416AB5000A26678 /* DetailViewControllerTests.swift */; };
+		7CB7DE9A2416ABF900A26678 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB7DE992416ABF900A26678 /* DetailViewController.swift */; };
 		7CE91F1223F342E500E22B44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CE91F1123F342E500E22B44 /* Main.storyboard */; };
 		7CE91F1423F34ACE00E22B44 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE91F1323F34ACE00E22B44 /* DataProvider.swift */; };
 /* End PBXBuildFile section */
@@ -69,6 +71,8 @@
 		7C9FEE4C2405826400A44858 /* DataProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProviderTests.swift; sourceTree = "<group>"; };
 		7C9FEE4E24058B1A00A44858 /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		7CB7DE952416926500A26678 /* TaskCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCellTests.swift; sourceTree = "<group>"; };
+		7CB7DE972416AB5000A26678 /* DetailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewControllerTests.swift; sourceTree = "<group>"; };
+		7CB7DE992416ABF900A26678 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		7CE91F1123F342E500E22B44 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		7CE91F1323F34ACE00E22B44 /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -200,6 +204,7 @@
 			children = (
 				7C81B47723E85A81002950B5 /* TaskListViewController.swift */,
 				7CE91F1323F34ACE00E22B44 /* DataProvider.swift */,
+				7CB7DE992416ABF900A26678 /* DetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -221,6 +226,7 @@
 			children = (
 				7C9CE1FC23F333B600F5589C /* TaskListViewControllerTests.swift */,
 				7C9FEE4C2405826400A44858 /* DataProviderTests.swift */,
+				7CB7DE972416AB5000A26678 /* DetailViewControllerTests.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -364,6 +370,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CB7DE9A2416ABF900A26678 /* DetailViewController.swift in Sources */,
 				7C3EEE5D23E96D18007DEE6A /* TaskManager.swift in Sources */,
 				7C45A72F23E8C64200CCDBF7 /* Task.swift in Sources */,
 				7C81B47823E85A81002950B5 /* TaskListViewController.swift in Sources */,
@@ -386,6 +393,7 @@
 				7C3EEE5A23E96CBD007DEE6A /* TaskManagerTests.swift in Sources */,
 				7C9CE1FD23F333B600F5589C /* TaskListViewControllerTests.swift in Sources */,
 				7C81B48B23E85A84002950B5 /* ToDoAppTests.swift in Sources */,
+				7CB7DE982416AB5000A26678 /* DetailViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
