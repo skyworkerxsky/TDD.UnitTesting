@@ -179,6 +179,9 @@
                                 <rect key="frame" x="256" y="353" width="32" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="save"/>
+                                <connections>
+                                    <action selector="save" destination="RCG-iU-Q6O" eventType="touchUpInside" id="VwM-eZ-Tmy"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="THk-2q-aXE">
                                 <rect key="frame" x="80" y="353" width="45" height="30"/>
@@ -196,7 +199,7 @@
                         <outlet property="descriptionTF" destination="R5m-An-NCb" id="F9C-BA-aH9"/>
                         <outlet property="locationTF" destination="0mI-MQ-vAO" id="Z5o-Nk-rAy"/>
                         <outlet property="saveBtn" destination="xat-hv-aIb" id="b3C-hJ-2SY"/>
-                        <outlet property="titleTF" destination="drq-k4-gUQ" id="X45-Kd-NzG"/>
+                        <outlet property="titleTF" destination="8gV-sg-41C" id="jtA-uj-fad"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ttt-U4-51F" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

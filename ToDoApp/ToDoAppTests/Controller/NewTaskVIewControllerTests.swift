@@ -7,11 +7,13 @@
 //
 
 import XCTest
+import CoreLocation
 @testable import ToDoApp
 
 class NewTaskVIewControllerTests: XCTestCase {
     
     var sut: NewTaskViewController!
+    var placemark: MockCLPlacemark!
     
     override func setUp() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -58,4 +60,67 @@ class NewTaskVIewControllerTests: XCTestCase {
         XCTAssertTrue(sut.canselBtn.isDescendant(of: sut.view))
     }
     
+    // проверка что при сохранении таск будет использоватья геокодер чтобы трансформаривать данные в координаты которые будем использовать дна карте
+    func testSaveUsesGeocoderToConvertCoordinateFromAddress() {
+        let df = DateFormatter()
+        df.dateFormat = "dd.MM.yy"
+        let date = df.date(from: "01.01.19")
+        sut.titleTF.text = "Foo"
+        sut.locationTF.text = "Bar"
+        sut.dateTF.text = "01.01.19"
+        sut.addressTF.text = "Тюмень"
+        sut.descriptionTF.text = "Baz"
+        
+        sut.taskManager = TaskManager()
+        let mockGeocoder = MockCLGeocoder()
+        sut.geocoder = mockGeocoder
+        sut.save() // сохраняем
+        
+        let coordinate = CLLocationCoordinate2DMake(57.1522719, 65.5327956)
+        let location = Location(name: "Bar", coordinate: coordinate)
+        let genertedTask = Task(title: "Foo", description: "Baz", location: location, date: date)
+        
+        placemark = MockCLPlacemark()
+        placemark.mockCoordinate = coordinate
+        mockGeocoder.completionHandler?([placemark], nil)
+        
+        let task = sut.taskManager.task(at: 0)
+        
+        XCTAssertEqual(task, genertedTask)
+    }
+    
+    func testSaveButtonHasSaveMethod() {
+        
+        let saveBtn = sut.saveBtn
+        
+        guard let actions = saveBtn?.actions(forTarget: sut, forControlEvent: .touchUpInside) else {
+            XCTFail()
+            return
+        }
+        
+        XCTAssertTrue(actions.contains("save"))
+    }
+    
+}
+
+// переопределяем Geocoder
+extension NewTaskVIewControllerTests {
+    class MockCLGeocoder: CLGeocoder {
+        
+        var completionHandler: CLGeocodeCompletionHandler?
+        
+        override func geocodeAddressString(_ addressString: String, completionHandler: @escaping CLGeocodeCompletionHandler) {
+            self.completionHandler = completionHandler
+        }
+    }
+}
+
+// вспомогательный класс для теста геокодера
+class MockCLPlacemark: CLPlacemark {
+    
+    var mockCoordinate: CLLocationCoordinate2D!
+    
+    override var location: CLLocation? {
+        return CLLocation(latitude: mockCoordinate.latitude, longitude: mockCoordinate.longitude)
+    }
 }
