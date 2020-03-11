@@ -35,10 +35,8 @@ class TaskCell: UITableViewCell {
             self.locationLabel.text = task.location?.name
             
             // установка даты
-            if let date = task.date {
-                let dateString = dateFormatter.string(from: date)
-                dateLabel.text = dateString
-            }
+            let dateString = dateFormatter.string(from: task.date)
+            dateLabel.text = dateString
         }
         
         
