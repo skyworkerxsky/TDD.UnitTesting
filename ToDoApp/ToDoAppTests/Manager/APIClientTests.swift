@@ -62,7 +62,7 @@ class APIClientTests: XCTestCase {
         let jsonDataStub = "{\"token\": \"tokenString\"}".data(using: .utf8)
         mockURLSession = MockURLSession(data: jsonDataStub, urlResponse: nil, responseError: nil)
         sut.urlSession = mockURLSession
-        let tokenExpectation = expectation(description: "Token exectation")
+        let tokenExpectation = expectation(description: "Token expectation")
         
         var caughtToken: String?
         sut.login(withName: "login", password: "password") { token, _ in
@@ -72,6 +72,39 @@ class APIClientTests: XCTestCase {
         
         waitForExpectations(timeout: 1) { _ in
             XCTAssertEqual(caughtToken, "tokenString")
+        }
+    }
+    
+    // проверяем что будет ошибка если неправильный формат данных
+    func testLoginInvalidJSONReturnsError() {
+        mockURLSession = MockURLSession(data: Data(), urlResponse: nil, responseError: nil)
+        sut.urlSession = mockURLSession
+        let errorExpectation = expectation(description: "Error expectation")
+        
+        var caughtError: Error?
+        sut.login(withName: "login", password: "password") { _, error in
+            caughtError = error
+            errorExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { _ in
+            XCTAssertNotNil(caughtError)
+        }
+    }
+    
+    func testLoginWhenDataIsNilReturnError() {
+        mockURLSession = MockURLSession(data: nil, urlResponse: nil, responseError: nil)
+        sut.urlSession = mockURLSession
+        let errorExpectation = expectation(description: "Error expectation")
+        
+        var caughtError: Error?
+        sut.login(withName: "login", password: "password") { _, error in
+            caughtError = error
+            errorExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { _ in
+            XCTAssertNotNil(caughtError)
         }
     }
     
