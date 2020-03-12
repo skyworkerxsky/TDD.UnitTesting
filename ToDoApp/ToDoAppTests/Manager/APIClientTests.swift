@@ -16,7 +16,7 @@ class APIClientTests: XCTestCase {
     
     override func setUp() {
         sut = APIClient()
-        mockURLSession = MockURLSession()
+        mockURLSession = MockURLSession(data: nil, urlResponse: nil, responseError: nil)
         sut.urlSession = mockURLSession
         
     }
@@ -56,12 +56,33 @@ class APIClientTests: XCTestCase {
         XCTAssertTrue(queryItems.contains(urlQueryItemPassword))
     }
     
+    // проверка что генерируется токен при успешой авторизации
+    // token -> Data -> completionHandler -> DataTask -> urlSession
+    func testSuccessfulLoginCreatesToken() {
+        let jsonDataStub = "{\"token\": \"tokenString\"}".data(using: .utf8)
+        mockURLSession = MockURLSession(data: jsonDataStub, urlResponse: nil, responseError: nil)
+        sut.urlSession = mockURLSession
+        let tokenExpectation = expectation(description: "Token exectation")
+        
+        var caughtToken: String?
+        sut.login(withName: "login", password: "password") { token, _ in
+            caughtToken = token
+            tokenExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { _ in
+            XCTAssertEqual(caughtToken, "tokenString")
+        }
+    }
+    
 }
 
 extension APIClientTests {
+    
     class MockURLSession: URLSessionProtocol {
         
         var url: URL?
+        private let mockDataTask: MockURLSessionDataTask
         
         var urlComponents: URLComponents? {
             guard let url = url else {
@@ -70,9 +91,38 @@ extension APIClientTests {
             return URLComponents(url: url, resolvingAgainstBaseURL: true)
         }
         
+        init(data: Data?, urlResponse: URLResponse?, responseError: Error?) {
+            mockDataTask = MockURLSessionDataTask(data: data, urlResponse: urlResponse, responseError: responseError)
+        }
+        
         func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
             self.url = url
-            return URLSession.shared.dataTask(with: url)
+//            return URLSession.shared.dataTask(with: url)
+            mockDataTask.completionHandler = completionHandler
+            return mockDataTask
         }
     }
+    
+    class MockURLSessionDataTask: URLSessionDataTask {
+        
+        private let data: Data?
+        private let urlResponse: URLResponse?
+        private let responseError: Error?
+        
+        typealias CompletionHandler = (Data?, URLResponse?, Error?) -> Void
+        var completionHandler: CompletionHandler?
+        
+        init(data: Data?, urlResponse: URLResponse?, responseError: Error?) {
+            self.data = data
+            self.urlResponse = urlResponse
+            self.responseError = responseError
+        }
+        
+        override func resume() {
+            DispatchQueue.main.async {
+                self.completionHandler?(self.data, self.urlResponse, self.responseError)
+            }
+        }
+    }
+    
 }
