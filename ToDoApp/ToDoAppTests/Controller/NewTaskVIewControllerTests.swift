@@ -106,7 +106,7 @@ class NewTaskVIewControllerTests: XCTestCase {
         let addressString = "Тюмень"
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(addressString) { (placemarks, error) in
-            if let error = error { return }
+            if error != nil { return }
             
             let placemark = placemarks?.first
             let location = placemark?.location
