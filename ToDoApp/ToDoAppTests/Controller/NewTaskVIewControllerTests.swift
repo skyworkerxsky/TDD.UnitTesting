@@ -127,10 +127,32 @@ class NewTaskVIewControllerTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
     
+    func testSaveDismissesNewTaskVC() {
+        let mockNewTaskVC = MockNewTaskViewController()
+        // инициализируем нижу аутлеты т.к. создаем через код и они равны nil
+        mockNewTaskVC.titleTF = UITextField()
+        mockNewTaskVC.titleTF.text = "Foo"
+        mockNewTaskVC.descriptionTF = UITextField()
+        mockNewTaskVC.descriptionTF.text = "Bar"
+        mockNewTaskVC.locationTF = UITextField()
+        mockNewTaskVC.locationTF.text = "Baz"
+        mockNewTaskVC.addressTF = UITextField()
+        mockNewTaskVC.addressTF.text = "Тюмень"
+        mockNewTaskVC.dateTF = UITextField()
+        mockNewTaskVC.dateTF.text = "01.01.19"
+        
+        // when
+        mockNewTaskVC.save()
+        
+        // then
+        XCTAssertTrue(mockNewTaskVC.isDismissed)
+    }
+    
 }
 
 // переопределяем Geocoder
 extension NewTaskVIewControllerTests {
+    
     class MockCLGeocoder: CLGeocoder {
         
         var completionHandler: CLGeocodeCompletionHandler?
@@ -139,14 +161,28 @@ extension NewTaskVIewControllerTests {
             self.completionHandler = completionHandler
         }
     }
+    
+    // вспомогательный класс для теста геокодера
+    class MockCLPlacemark: CLPlacemark {
+        
+        var mockCoordinate: CLLocationCoordinate2D!
+        
+        override var location: CLLocation? {
+            return CLLocation(latitude: mockCoordinate.latitude, longitude: mockCoordinate.longitude)
+        }
+    }
+    
 }
 
-// вспомогательный класс для теста геокодера
-class MockCLPlacemark: CLPlacemark {
+extension NewTaskVIewControllerTests {
     
-    var mockCoordinate: CLLocationCoordinate2D!
-    
-    override var location: CLLocation? {
-        return CLLocation(latitude: mockCoordinate.latitude, longitude: mockCoordinate.longitude)
+    class MockNewTaskViewController: NewTaskViewController {
+        var isDismissed = false
+        
+        override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+            isDismissed = true
+        }
     }
+    
 }
+

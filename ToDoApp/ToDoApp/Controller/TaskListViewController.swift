@@ -20,13 +20,15 @@ class TaskListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("main")
+        let taskManager = TaskManager()
+        dataProvider.taskManager = taskManager
     }
     
     // MARK: - Actions
     
     @IBAction func addNewTask(_ sender: UIBarButtonItem) {
         if let viewController = storyboard?.instantiateViewController(identifier: String(describing: NewTaskViewController.self)) as? NewTaskViewController {
+            viewController.taskManager = self.dataProvider.taskManager
             present(viewController, animated: true, completion: nil)
         }
     }

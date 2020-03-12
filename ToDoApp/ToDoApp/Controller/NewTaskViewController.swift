@@ -14,13 +14,13 @@ class NewTaskViewController: UIViewController {
     var taskManager: TaskManager!
     var geocoder = CLGeocoder()
     
-    @IBOutlet weak var titleTF: UITextField!
-    @IBOutlet weak var locationTF: UITextField!
-    @IBOutlet weak var dateTF: UITextField!
-    @IBOutlet weak var addressTF: UITextField!
-    @IBOutlet weak var descriptionTF: UITextField!
-    @IBOutlet weak var saveBtn: UIButton!
-    @IBOutlet weak var canselBtn: UIButton!
+    @IBOutlet var titleTF: UITextField!
+    @IBOutlet var locationTF: UITextField!
+    @IBOutlet var dateTF: UITextField!
+    @IBOutlet var addressTF: UITextField!
+    @IBOutlet var descriptionTF: UITextField!
+    @IBOutlet var saveBtn: UIButton!
+    @IBOutlet var canselBtn: UIButton!
     
     var dateFormatter: DateFormatter {
         let df = DateFormatter()
@@ -34,6 +34,7 @@ class NewTaskViewController: UIViewController {
         let date = dateFormatter.date(from: dateTF.text!)
         let descriptionString = descriptionTF.text
         let addressString = addressTF.text
+        
         geocoder.geocodeAddressString(addressString!) { [weak self] (placemarks, error) in
             guard let self = self else { return }
             let placemark = placemarks?.first
@@ -42,6 +43,7 @@ class NewTaskViewController: UIViewController {
             let task = Task(title: titleString!, description: descriptionString, location: location, date: date)
             self.taskManager.add(task: task)
         }
+        dismiss(animated: true, completion: nil)
     }
     
 }

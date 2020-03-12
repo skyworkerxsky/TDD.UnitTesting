@@ -59,15 +59,12 @@ class TaskListViewControllerTests: XCTestCase {
         XCTAssertEqual(target as? TaskListViewController, sut)
     }
     
-    // при нажатии появляется newtaskVC
-    func testAddNewTaskPresentNewTaskVC() {
-        XCTAssertNil(sut.presentedViewController) // проверяем что не отображается доп. контроллер
-        
+    func sharingNewTaskVC() -> NewTaskViewController {
+
         guard
             let newTaskButton = sut.navigationItem.rightBarButtonItem,
             let action = newTaskButton.action else {
-                XCTFail()
-                return
+                return NewTaskViewController()
         }
         
         // добавляем sut в качестве RootVC
@@ -75,11 +72,21 @@ class TaskListViewControllerTests: XCTestCase {
         
         // пробуем выполнить action c кнопки
         sut.performSelector(onMainThread: action, with: newTaskButton, waitUntilDone: true)
-        XCTAssertNotNil(sut.presentedViewController)
-        XCTAssertTrue(sut.presentedViewController is NewTaskViewController)
         
         let newTaskVC = sut.presentedViewController as! NewTaskViewController
+        return newTaskVC
+    }
+    
+    // при нажатии появляется newtaskVC
+    func testAddNewTaskPresentNewTaskVC() {
+        let newTaskVC = sharingNewTaskVC()
         XCTAssertNotNil(newTaskVC.titleTF)
+    }
+    
+    // проверка что спользуем один и тот же taskManager
+    func testSharesSameTaskMnagerWithNewTaskVC() {
+        let newTaskVC = sharingNewTaskVC()
+        XCTAssertTrue(newTaskVC.taskManager === sut.dataProvider.taskManager)
     }
     
 }
