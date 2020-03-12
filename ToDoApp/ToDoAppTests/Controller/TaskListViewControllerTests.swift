@@ -41,9 +41,9 @@ class TaskListViewControllerTests: XCTestCase {
     }
     
     // проверяем установлен ли dataSource
-     func testWhenViewIsLoadedTableViewDataSourceIsSet() {
+    func testWhenViewIsLoadedTableViewDataSourceIsSet() {
         XCTAssertTrue(sut.tableView.dataSource is DataProvider)
-     }
+    }
     
     // проверяем что делегатом и dataSource является наш tableView
     func testWhenViewIsLoadedTableViewDelegateEqualsTableViewDataSourse(){
@@ -51,6 +51,35 @@ class TaskListViewControllerTests: XCTestCase {
             sut.tableView.delegate as? DataProvider,
             sut.tableView.dataSource as? DataProvider
         )
+    }
+    
+    // проверяем кнопку что у нас есть кнопка add
+    func testTaskVCHasAddBarButtonWithSelfAsTarget() {
+        let target = sut.navigationItem.rightBarButtonItem?.target
+        XCTAssertEqual(target as? TaskListViewController, sut)
+    }
+    
+    // при нажатии появляется newtaskVC
+    func testAddNewTaskPresentNewTaskVC() {
+        XCTAssertNil(sut.presentedViewController) // проверяем что не отображается доп. контроллер
+        
+        guard
+            let newTaskButton = sut.navigationItem.rightBarButtonItem,
+            let action = newTaskButton.action else {
+                XCTFail()
+                return
+        }
+        
+        // добавляем sut в качестве RootVC
+        UIApplication.shared.keyWindow?.rootViewController = sut
+        
+        // пробуем выполнить action c кнопки
+        sut.performSelector(onMainThread: action, with: newTaskButton, waitUntilDone: true)
+        XCTAssertNotNil(sut.presentedViewController)
+        XCTAssertTrue(sut.presentedViewController is NewTaskViewController)
+        
+        let newTaskVC = sut.presentedViewController as! NewTaskViewController
+        XCTAssertNotNil(newTaskVC.titleTF)
     }
     
 }

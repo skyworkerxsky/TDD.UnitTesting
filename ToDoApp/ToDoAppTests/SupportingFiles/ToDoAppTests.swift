@@ -19,16 +19,15 @@ class ToDoAppTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    // проверяем что главный экран это TaskListViewController в navigation
+    func testInitialViewControllerIsTaskListViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let navController = storyboard.instantiateInitialViewController() as! UINavigationController
+        let rootViewController = navController.viewControllers.first as! TaskListViewController
+        
+        XCTAssertTrue(rootViewController is TaskListViewController)
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
+    
+    
 
 }

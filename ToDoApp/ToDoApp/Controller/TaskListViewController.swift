@@ -22,6 +22,14 @@ class TaskListViewController: UIViewController {
         
         print("main")
     }
-
+    
+    // MARK: - Actions
+    
+    @IBAction func addNewTask(_ sender: UIBarButtonItem) {
+        if let viewController = storyboard?.instantiateViewController(identifier: String(describing: NewTaskViewController.self)) as? NewTaskViewController {
+            present(viewController, animated: true, completion: nil)
+        }
+    }
+    
 }
 

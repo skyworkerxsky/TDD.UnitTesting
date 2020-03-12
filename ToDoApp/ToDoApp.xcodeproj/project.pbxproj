@@ -179,7 +179,7 @@
 				7C9CE1FB23F3336E00F5589C /* Controller */,
 				7C45A72D23E8C5A800CCDBF7 /* Model */,
 				7C3EEE5823E96C88007DEE6A /* Manager */,
-				7C81B48A23E85A84002950B5 /* ToDoAppTests.swift */,
+				7CD1D52F241A731A009F076E /* SupportingFiles */,
 				7C81B48C23E85A84002950B5 /* Info.plist */,
 			);
 			path = ToDoAppTests;
@@ -260,6 +260,14 @@
 				7CD1D52D241A5AB1009F076E /* String+extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7CD1D52F241A731A009F076E /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7C81B48A23E85A84002950B5 /* ToDoAppTests.swift */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
