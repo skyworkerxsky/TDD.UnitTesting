@@ -14,6 +14,7 @@ class TaskListViewControllerTests: XCTestCase {
     var sut: TaskListViewController!
     
     override func setUp() {
+        super.setUp()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: String(describing: TaskListViewController.self))
         sut = vc as? TaskListViewController
@@ -87,6 +88,47 @@ class TaskListViewControllerTests: XCTestCase {
     func testSharesSameTaskMnagerWithNewTaskVC() {
         let newTaskVC = sharingNewTaskVC()
         XCTAssertTrue(newTaskVC.taskManager === sut.dataProvider.taskManager)
+    }
+    
+    func testWhenViewAppearedTableViewReload() {
+        let mockTableView = MockTableView()
+        sut.tableView = mockTableView
+        
+        // отрабатывает ViewWillAppear
+        sut.beginAppearanceTransition(true, animated: true)
+        sut.endAppearanceTransition()
+        
+        XCTAssertTrue((sut.tableView as! MockTableView).isReload)
+    }
+    
+    func testTapiingCellSendsNotification() {
+        let task = Task(title: "Foo")
+        sut.dataProvider.taskManager!.add(task: task)
+        
+        expectation(forNotification: NSNotification.Name("DidSelectRow notificaation"), object: nil) { notification -> Bool in
+            
+            guard let taskFromNotification = notification.userInfo?["task"] as? Task else {
+                return false
+            }
+            
+            return task == taskFromNotification
+            
+        }
+        
+        let tableView = sut.tableView
+        tableView?.delegate?.tableView?(tableView!, didSelectRowAt: IndexPath(row: 0, section: 0))
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+}
+
+extension TaskListViewControllerTests {
+    
+    class MockTableView: UITableView {
+        var isReload = false
+        override func reloadData() {
+            isReload = true
+        }
     }
     
 }

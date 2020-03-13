@@ -16,6 +16,7 @@ class NewTaskVIewControllerTests: XCTestCase {
     var placemark: MockCLPlacemark!
     
     override func setUp() {
+        super.setUp()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         sut = storyboard.instantiateViewController(identifier: String(describing: NewTaskViewController.self)) as? NewTaskViewController
         sut.loadViewIfNeeded()
@@ -145,7 +146,9 @@ class NewTaskVIewControllerTests: XCTestCase {
         mockNewTaskVC.save()
         
         // then
-        XCTAssertTrue(mockNewTaskVC.isDismissed)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            XCTAssertTrue(mockNewTaskVC.isDismissed)
+        }
     }
     
 }
