@@ -28,6 +28,21 @@ class TaskListViewController: UIViewController {
         
         let taskManager = TaskManager()
         dataProvider.taskManager = taskManager
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showDetails(withNotification:)), name: NSNotification.Name(rawValue: "DidSelectRow notifi"), object: nil)
+    }
+    
+    // MARK: - Func
+    
+    @objc func showDetails(withNotification notifi: Notification) {
+        guard
+            let userInfo = notifi.userInfo,
+            let task = userInfo["task"] as? Task,
+            let detailVC = storyboard?.instantiateViewController(identifier: String(describing: DetailViewController.self)) as? DetailViewController else {
+            fatalError()
+        }
+        detailVC.task = task
+        navigationController?.pushViewController(detailVC, animated: true)
     }
     
     // MARK: - Actions
