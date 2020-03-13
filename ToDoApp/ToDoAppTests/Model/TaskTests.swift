@@ -58,5 +58,26 @@ class TaskTests: XCTestCase {
         
         XCTAssertEqual(location, task.location)
     }
+    
+    // проверяем что наши данные приводятся к простым типам для сохранения
+    func testcanBeCreatedFromPlistDecitonary() {
+        let location = Location(name: "Baz")
+        let date = Date(timeIntervalSince1970: 10)
+        let task = Task(title: "Foo", description: "Bar", location: location, date: date)
+        let locationDict: [String: Any] = [
+            "name": "Baz"
+        ]
+        
+        let dictionary: [String: Any] = [
+            "title": "Foo",
+            "description": "Bar",
+            "date": date,
+            "location": locationDict
+        ]
+        
+        let createdTask = Task(dict: dictionary)
+        
+        XCTAssertEqual(task, createdTask)
+    }
 
 }
