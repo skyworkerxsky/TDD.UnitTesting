@@ -6,9 +6,12 @@
 //  Copyright © 2020 Алексей Макаров. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class TaskManager {
+    
+    private var tasks: [Task] = []
+    private var doneTasks: [Task] = []
     
     var tasksCount: Int {
         return tasks.count
@@ -18,8 +21,45 @@ class TaskManager {
         return doneTasks.count
     }
     
-    private var tasks = [Task]()
-    private var doneTasks = [Task]()
+    var tasksUrl: URL {
+        let fileURLs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        guard let documentURL = fileURLs.first else {
+            fatalError()
+        }
+        
+        return documentURL.appendingPathComponent("tasks.plist")
+    }
+    
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(save), name: UIApplication.willResignActiveNotification, object: nil)
+        
+        if let data = try? Data(contentsOf: tasksUrl) {
+            let dictionary = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as! [[String: Any]]
+            for dict in dictionary! {
+                if let task = Task(dict: dict){
+                    tasks.append(task)
+                }
+            }
+        }
+    }
+    
+    deinit {
+        save()
+    }
+    
+    @objc func save() {
+        let taskDictionary = self.tasks.map { $0.dict }
+        guard taskDictionary.count > 0 else {
+            try? FileManager.default.removeItem(at: tasksUrl)
+            return
+        }
+        
+        let plistData = try? PropertyListSerialization.data(fromPropertyList: taskDictionary,
+                                                            format: .xml,
+                                                            options: PropertyListSerialization.WriteOptions(0))
+        
+        try? plistData?.write(to: tasksUrl, options: .atomic)
+    }
     
     func add(task: Task) {
         if !tasks.contains(task) {

@@ -19,7 +19,9 @@ class TaskManagerTests: XCTestCase {
     }
     
     override func tearDown() {
+        sut .removeAll()
         sut = nil // удаляем менеджер после прогонки тестов
+        super.tearDown()
     }
     
     // при запуске кол-во тасков равно нулю
@@ -103,6 +105,25 @@ class TaskManagerTests: XCTestCase {
         sut.add(task: Task(title: "Foo"))
         
         XCTAssertTrue(sut.tasksCount == 1)
+    }
+    
+    func testWhenTaskManagerRecreatedCavedTasksShouldBeEqual() {
+        var taskManager: TaskManager! = TaskManager()
+        let task = Task(title: "Foo")
+        let task1 = Task(title: "Bar")
+        
+        taskManager.add(task: task)
+        taskManager.add(task: task1)
+        
+        NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
+        
+        taskManager = nil
+        
+        taskManager = TaskManager()
+        
+        XCTAssertEqual(taskManager.tasksCount, 2)
+        XCTAssertEqual(taskManager.task(at: 0), task)
+        XCTAssertEqual(taskManager.task(at: 1), task1)
     }
     
 }
