@@ -110,15 +110,15 @@ class TaskCellTests: XCTestCase {
     }
     
     // если задача выполнена то удаляем date
-    func testDoneTaskDateLabelEqualsNil() {
+    func testDoneTaskDateLabelEmptyString() {
         configureCellWithTask()
-        XCTAssertNil(cell.dateLabel)
+        XCTAssertEqual(cell.dateLabel.text, "")
     }
     
     // если задача выполнена то удаляем location
-    func testDoneTaskLoactionLabelEqualsNil() {
+    func testDoneTaskLoactionLabelEmptyString() {
         configureCellWithTask()
-        XCTAssertNil(cell.locationLabel)
+        XCTAssertEqual(cell.locationLabel.text, "")
     }
     
 }
